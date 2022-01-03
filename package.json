@@ -1,0 +1,9 @@
+{
+  "name": "@mylinkpi/task_pool",
+  "version": "1.0.0",
+  "dependencies": {
+  },
+  "main": "index.js",
+  "author": "Xu Fan",
+  "license": "MIT"
+}
