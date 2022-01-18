@@ -5,16 +5,20 @@ class TaskPool extends Array {
     this.running = {};
     this.runningNum = 0;
   }
-  async push(n) {
-    const i = this.length;
-    super.push(n);
-    this.running[i] = n.then(() => i);
-    this.runningNum++;
-    if (this.runningNum >= this.limit) {
-      const r = await Promise.race(Object.values(this.running));
-      delete this.running[r];
-      this.runningNum--;
+  async push(...items) {
+    for (let i = 0; i < items.length; i++) {
+      const n = items[i];
+      const length = this.length;
+      super.push(n);
+      this.running[length] = n.then(() => length);
+      this.runningNum++;
+      if (this.runningNum >= this.limit) {
+        const r = await Promise.race(Object.values(this.running));
+        delete this.running[r];
+        this.runningNum--;
+      }
     }
+    return this.length;
   }
 }
 
